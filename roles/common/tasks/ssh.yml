@@ -1,0 +1,11 @@
+---
+- name: Disable ssh password authentication
+  lineinfile: dest=/etc/ssh/sshd_config regexp=^PasswordAuthentication line="PasswordAuthentication no"
+  notify:
+  - reload-sshd
+
+- name: Disable ssh root password login
+  lineinfile: dest=/etc/ssh/sshd_config regexp=^PermitRootLogin line="PermitRootLogin without-password"
+  notify:
+  - reload-sshd
+

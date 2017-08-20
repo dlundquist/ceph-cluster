@@ -1,0 +1,18 @@
+---
+- name: reload-sshd
+  service: name=ssh state=reloaded
+
+- name: update-grub
+  command: update-grub
+
+- name: apply-disable-ipv6-default
+  command: sysctl -f /etc/sysctl.d/10-disable-ipv6-default.conf
+
+- name: restore-iptables-rules
+  shell: "iptables-restore < /etc/iptables/rules.v4"
+
+- name: restore-ip6tables-rules
+  shell: "ip6tables-restore < /etc/iptables/rules.v6"
+
+- name: restart-ntp
+  service: name=ntp state=restarted

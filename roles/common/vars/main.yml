@@ -1,0 +1,11 @@
+---
+product_specific_cmdline:
+  "X8DAH": "console=ttyS2,115200n8 console=tty0 "
+  "X8DTL": ""
+  "X9DRD-7LN4F(-JBOD)/X9DRD-EF": "console=ttyS1,115200n8 console=tty0 "
+  "X10DRH": "console=ttyS1,115200n8 console=tty0 "
+  "X10SL7-F": "console=ttyS2,115200n8 console=tty0 "
+  "X10SLH-F/X10SLM+-F": "console=ttyS2,115200n8 console=tty0 "
+  "X10SLL-F": "console=ttyS2,115200n8 console=tty0 "
+  "X11SSV-Q": ""
+  "Super Server": "console=ttyS1,115200n8 console=tty0 "

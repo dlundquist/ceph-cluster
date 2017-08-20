@@ -1,0 +1,9 @@
+---
+- name: Disable quiet boot
+  lineinfile: dest=/etc/default/grub regexp='^GRUB_CMDLINE_LINUX_DEFAULT=' line='GRUB_CMDLINE_LINUX_DEFAULT=""'
+  notify: update-grub
+
+- name: Lookup kernel command line
+  lineinfile: dest=/etc/default/grub regexp='^GRUB_CMDLINE_LINUX='
+              line='GRUB_CMDLINE_LINUX="{{ product_specific_cmdline[ansible_product_name] }}consoleblank=0 crashkernel=256M"'
+  notify: update-grub

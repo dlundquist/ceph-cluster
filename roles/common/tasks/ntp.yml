@@ -1,0 +1,11 @@
+---
+- name: install ntp
+  apt: pkg=ntp
+
+- lineinfile: dest=/etc/ntp.conf regexp='^pool ' state=absent
+  notify:
+  - restart-ntp
+
+- lineinfile: dest=/etc/ntp.conf regexp='^server ' line='server 192.168.3.1'
+  notify:
+  - restart-ntp

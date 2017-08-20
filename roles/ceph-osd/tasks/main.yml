@@ -1,0 +1,7 @@
+---
+- name: Install Ceph OSD
+  apt: pkg=ceph-osd
+
+- name: Bootstrap-osd keyring
+  command: ceph auth get-or-create client.bootstrap-osd mon 'allow profile bootstrap-osd' mgr 'allow r' -o /var/lib/ceph/bootstrap-osd/ceph.keyring
+           creates=/var/lib/ceph/bootstrap-osd/ceph.keyring

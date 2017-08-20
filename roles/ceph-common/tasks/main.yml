@@ -1,0 +1,19 @@
+---
+- apt: pkg=ca-certificates
+
+- name: Ceph APT key
+  apt_key: url=https://download.ceph.com/keys/release.asc
+           id=08B73419AC32B4E966C1A330E84AC2C0460F3994
+
+- name: Ceph APT source
+  template: src=ceph.list dest=/etc/apt/sources.list.d/ceph.list
+  notify:
+  - apt-update
+
+- meta: flush_handlers
+
+- name: Install Ceph
+  apt: pkg=ceph-base state=latest
+
+- name: Ceph config
+  template: src=ceph.conf dest=/etc/ceph/ceph.conf

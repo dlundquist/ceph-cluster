@@ -1,0 +1,5 @@
+---
+- name: Disable IPv6 on interfaces by default
+  copy: src=10-disable-ipv6-default.conf dest=/etc/sysctl.d/10-disable-ipv6-default.conf
+  notify:
+  - apply-disable-ipv6-default

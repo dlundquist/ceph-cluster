@@ -1,0 +1,20 @@
+---
+- hosts: all
+  roles:
+  - common
+
+- hosts: ceph-mon
+  roles:
+  - ceph-mon
+
+- hosts: ceph-osd
+  roles:
+  - ceph-osd
+
+- hosts: vhost
+  roles:
+  - vhost
+
+- hosts: rbdclient
+  roles:
+  - rbdclient

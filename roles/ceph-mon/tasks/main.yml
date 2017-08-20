@@ -1,0 +1,9 @@
+---
+- name: Install Ceph monitor and manager
+  apt: pkg={{ item }}
+  with_items:
+  - ceph-mon
+  - ceph-mgr
+
+- name: Admin keyring
+  copy: src=ceph.client.admin.keyring dest=/etc/ceph/ceph.client.admin.keyring mode=0600

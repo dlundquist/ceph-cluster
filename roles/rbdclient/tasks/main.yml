@@ -1,0 +1,13 @@
+---
+- name: Install Ceph RBD
+  apt: pkg=ceph-common
+
+#- name: Obtain RBD keychain
+#  command: ceph auth get-or-create client.rbd mon 'profile rbd' mgr 'allow r' osd 'profile rbd pool=rbd'
+#  delegate_to: "{{ groups['ceph-mon']|first }}"
+#  delegate_facts: True
+#  run_once: True
+#  register: client_rbd_keychain
+#
+#- name: Install RBD keychain
+#  copy: content="{{ client_rbd_keychain.stdout }}" dest=/etc/ceph/ceph.client.rbd.keyring mode=600

@@ -1,0 +1,44 @@
+---
+- name: update apt cache and install sudo
+  apt: update_cache=yes cache_valid_time=3600 pkg=sudo
+
+- name: Enable password-less sudo for sudo group
+  lineinfile: dest=/etc/sudoers regexp=^%sudo line='%sudo   ALL=(ALL:ALL) NOPASSWD:ALL'
+
+- user: name=dustin comment='Dustin Lundquist,,,' groups=adm,dialout,sudo append=yes shell=/bin/bash
+
+- include: ssh.yml
+
+- include: grub.yml
+
+- include: ipv6default.yml
+
+- include: firewall.yml
+
+- include: ntp.yml
+
+- name: Remove nano
+  apt: pkg=nano purge=yes state=absent
+
+- name: Use DMA for mail
+  apt: pkg=dma
+
+- name: Enable unattended upgrades
+  apt: pkg=unattended-upgrades
+
+- name: Install common utilities
+  apt: pkg={{ item }}
+  with_items:
+  - bwm-ng
+  - strace
+  - sysstat
+  - tmux
+
+- name: add host to local output/hosts file
+  local_action:
+    module: lineinfile
+    dest: output/hosts
+    regexp: "^.+ {{ ansible_hostname }}$"
+    line: "{{ ansible_default_ipv4.address }} {{ ansible_fqdn }} {{ ansible_hostname }}"
+    create: true
+
