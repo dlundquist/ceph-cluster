@@ -1,6 +1,9 @@
 ---
 - name: Install Ceph RBD
-  apt: pkg=ceph-common
+  apt: pkg={{ item }} state=latest
+  with_items:
+  - ceph-common
+  - kpartx
 
 #- name: Obtain RBD keychain
 #  command: ceph auth get-or-create client.rbd mon 'profile rbd' mgr 'allow r' osd 'profile rbd pool=rbd'

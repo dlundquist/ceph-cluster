@@ -3,13 +3,14 @@
   copy: dest=/etc/modprobe.d/kvm-intel.conf content="options kvm-intel nested=1\n"
 
 - name: Install libvirt
-  apt: pkg="{{ item }}" install_recommends=no
+  apt: pkg="{{ item }}" install_recommends=no state=latest
   with_items:
   - libvirt-daemon-system
   - qemu-kvm
   - qemu-block-extra
   - bridge-utils
   - tcpdump
+  - kpartx
   - python-libvirt
   - python-lxml
 
