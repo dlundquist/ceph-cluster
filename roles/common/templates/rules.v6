@@ -15,6 +15,25 @@
 {% if 'ceph-osd' in group_names %}
 -A INPUT -s {{ backend_network_cidr }} -d {{ backend_network_cidr }} -p tcp -m multiport --dports 6800:6832 -j ACCEPT
 {% endif %}
+{% if 'nfs-server' in group_names %}
+-A INPUT -s {{ backend_network_cidr }} -d {{ backend_network_cidr }} -p tcp -m tcp --dport 111 -j ACCEPT
+-A INPUT -s {{ backend_network_cidr }} -d {{ backend_network_cidr }} -p udp -m udp --dport 111 -j ACCEPT
+-A INPUT -s {{ backend_network_cidr }} -d {{ backend_network_cidr }} -p tcp -m tcp --dport 2049 -j ACCEPT
+-A INPUT -s {{ backend_network_cidr }} -d {{ backend_network_cidr }} -p udp -m udp --dport 2049 -j ACCEPT
+-A INPUT -s {{ backend_network_cidr }} -d {{ backend_network_cidr }} -p tcp -m tcp --dport 32765 -j ACCEPT
+-A INPUT -s {{ backend_network_cidr }} -d {{ backend_network_cidr }} -p udp -m udp --dport 32765 -j ACCEPT
+-A INPUT -s {{ backend_network_cidr }} -d {{ backend_network_cidr }} -p tcp -m tcp --dport 32767 -j ACCEPT
+-A INPUT -s {{ backend_network_cidr }} -d {{ backend_network_cidr }} -p udp -m udp --dport 32767 -j ACCEPT
+# FIXME: these are not really part of the NFS server role
+-A INPUT -s {{ backend_network_cidr }} -d {{ backend_network_cidr }} -p tcp -m tcp --dport 80 -j ACCEPT
+-A INPUT -s {{ backend_network_cidr }} -d {{ backend_network_cidr }} -p udp -m udp --dport 123 -j ACCEPT
+-A INPUT -s {{ backend_network_cidr }} -d {{ backend_network_cidr }} -p udp -m udp --dport 514 -j ACCEPT
+-A INPUT -s {{ backend_network_cidr }} -d {{ backend_network_cidr }} -p udp -m udp --dport 25826 -j ACCEPT
+{% endif %}
+{% if 'nfs-client' in group_names %}
+-A INPUT -s {{ backend_network_cidr }} -d {{ backend_network_cidr }} -p tcp -m tcp --dport 111 -j ACCEPT
+-A INPUT -s {{ backend_network_cidr }} -d {{ backend_network_cidr }} -p udp -m udp --dport 111 -j ACCEPT
+{% endif %}
 -A INPUT -m limit --limit 15/min -j LOG --log-prefix "IPTABLES: " --log-level 7
 -A OUTPUT -d {{ backend_network_cidr }} -p tcp -m tcp --dport 0 -j DROP
 COMMIT

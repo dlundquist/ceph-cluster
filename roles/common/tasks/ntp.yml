@@ -2,10 +2,12 @@
 - name: install ntp
   apt: pkg=ntp
 
-- lineinfile: dest=/etc/ntp.conf regexp='^pool ' state=absent
+- name: Remove all NTP pools
+  lineinfile: dest=/etc/ntp.conf regexp='^pool ' state=absent
   notify:
   - restart-ntp
 
-- lineinfile: dest=/etc/ntp.conf regexp='^server ' line="server {{ ntp_servers | first }}"
+- name: Add NTP server
+  lineinfile: dest=/etc/ntp.conf regexp='^server ' line="server {{ ntp_servers | first }}"
   notify:
   - restart-ntp
