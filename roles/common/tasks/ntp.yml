@@ -6,6 +6,6 @@
   notify:
   - restart-ntp
 
-- lineinfile: dest=/etc/ntp.conf regexp='^server ' line='server 192.168.3.1'
+- lineinfile: dest=/etc/ntp.conf regexp='^server ' line="server {{ ntp_servers | first }}"
   notify:
   - restart-ntp

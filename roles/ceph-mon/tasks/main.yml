@@ -5,5 +5,11 @@
   - ceph-mon
   - ceph-mgr
 
-- name: Admin keyring
-  copy: src=ceph.client.admin.keyring dest=/etc/ceph/ceph.client.admin.keyring mode=0600
+- name: Gather admin keyring
+  command: ceph auth get client.admin
+  run_once: true
+  register: auth_keyring_result
+
+- name: Install Admin keyring
+  copy: content="{{ auth_keyring_result.stdout }}\n"
+        dest=/etc/ceph/ceph.client.admin.keyring mode=0600
