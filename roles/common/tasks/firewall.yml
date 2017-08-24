@@ -3,11 +3,11 @@
   apt: pkg=iptables-persistent
 
 - name: IPv4 Firewall rules
-  template: src=rules.v4 dest=/etc/iptables/rules.v4
+  template: src=rules.v4 dest=/etc/iptables/rules.v4 backup=yes
   notify:
   - restore-iptables-rules
 
 - name: IPv6 Firewall rules
-  template: src=rules.v6 dest=/etc/iptables/rules.v6
+  template: src=rules.v6 dest=/etc/iptables/rules.v6 backup=yes
   notify:
   - restore-ip6tables-rules
