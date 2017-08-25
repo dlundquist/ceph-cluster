@@ -1,7 +1,16 @@
 ---
 - name: Install Ceph OSD
-  apt: pkg=ceph-osd
+  apt: pkg={{ item }} state=latest
+  with_items:
+  - ceph-osd
+  - smartmontools
 
-- name: Bootstrap-osd keyring
-  command: ceph auth get-or-create client.bootstrap-osd mon 'allow profile bootstrap-osd' mgr 'allow r' -o /var/lib/ceph/bootstrap-osd/ceph.keyring
-           creates=/var/lib/ceph/bootstrap-osd/ceph.keyring
+- name: Gather bootstrap-osd keyring
+  command: ceph auth get-or-create client.bootstrap-osd mon 'allow profile bootstrap-osd' mgr 'allow r'
+  delegate_to: "{{ groups['ceph-mon'] | random }}"
+  run_once: true
+  register: bootstrap_keyring_result
+
+- name: Install bootstrap-osd keyring
+  copy: content="{{ bootstrap_keyring_result.stdout }}\n"
+        dest=/var/lib/ceph/bootstrap-osd/ceph.keyring mode=0600
