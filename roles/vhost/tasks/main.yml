@@ -20,3 +20,11 @@
 
 - name: Remove default net
   virt_net: name=default state=absent
+
+- name: Gather libvirt client keyring
+  command: ceph auth get-or-create client.libvirt mon 'allow r' mgr 'allow r' osd 'allow class-read object_prefix rbd_children, allow rwx pool=libvirt-pool'
+  delegate_to: "{{ groups['ceph-mon'] | random }}"
+  run_once: true
+  register: libvirt_keyring_result
+
+
