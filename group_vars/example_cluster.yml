@@ -1,0 +1,11 @@
+---
+ntp_servers:
+- 2001:db8::10
+- 2001:db8::11
+backend_network_cidr: 2001:db8::0/64
+ceph:
+  fsid: 1500d433-9d5e-414d-a725-54bd536aae7a
+  monitors:
+  - 2001:db8::1001
+  - 2001:db8::1002
+  - 2001:db8::1003
